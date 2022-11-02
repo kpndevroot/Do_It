@@ -6,6 +6,7 @@ import {
   Modal,
   Image,
   Text,
+  TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -47,13 +48,23 @@ function GoalInput(props) {
           style={styles.image}
           source={require("../../asset/images/goalWhite.png")}
         />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Goal Name"
-          onChangeText={goalInputHandler}
-          value={enteredGoal}
-        />
-        <Button title="Show Date Picker" onPress={showDatePicker} />
+        <View style={styles.inputs}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Goal Name"
+            onChangeText={goalInputHandler}
+            value={enteredGoal}
+          />
+
+          <TouchableOpacity onPress={showDatePicker} style={styles.dateBtn}>
+            <Image
+              style={styles.dateBtnImg}
+              source={require("../../asset/images/sandclock.png")}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
+
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="datetime"
@@ -83,11 +94,34 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#312b6b",
   },
+  inputs: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  dateBtn: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 40,
+    height: 50,
+    margin: 2,
+    padding: 15,
+    backgroundColor: "white",
+    borderRadius: 10,
+  },
+  dateBtnImg: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 35,
+    height: 35,
+    backgroundColor: "white",
+    borderRadius: 10,
+  },
   textInput: {
     borderWidth: 1,
     borderColor: "#e4d0ff",
     backgroundColor: "#e4d0ff",
-    width: "100%",
+    width: "80%",
     color: "#120438",
     borderRadius: 8,
     padding: 10,

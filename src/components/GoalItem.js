@@ -10,8 +10,12 @@ function GoalItem(props) {
     diffMins: 0,
   });
   useEffect(() => {
-    console.log("hi iam loaded");
     dateConverter();
+    const interval = setInterval(() => {
+      console.log("hi iam loaded");
+      dateConverter();
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const dateConverter = () => {
@@ -43,21 +47,31 @@ function GoalItem(props) {
     >
       <View style={styles.goalItem}>
         <Text style={styles.goalText}>
-          {props.text + " " + props.data.item.date.toDateString()} in{" "}
-          {remainTime.diffDays > 0
-            ? remainTime.diffDays +
-              " days" +
-              remainTime.diffHrs +
-              " hours" +
-              remainTime.mins +
-              " minutes"
-            : remainTime.diffDays === 0 && remainTime.diffHrs > 0
-            ? remainTime.diffHrs + " hours" + remainTime.mins + " minutes"
-            : remainTime.diffDays === 0 &&
-              remainTime.diffHrs === 0 &&
-              remainTime.diffMins > 0
-            ? remainTime.diffMins + " minutes"
-            : remainTime.diffSeconds + " seconds"}
+          {props.text + " "} <Text style={styles.inText}>in</Text>{" "}
+          {remainTime.diffDays > 0 ? (
+            <Text style={styles.days}>
+              {remainTime.diffDays} days {remainTime.diffHrs} hours
+              {remainTime.diffMins} minutes
+            </Text>
+          ) : remainTime.diffDays === 0 && remainTime.diffHrs > 0 ? (
+            <Text style={styles.hours}>
+              {remainTime.diffHrs} hours {remainTime.diffMins} minutes
+            </Text>
+          ) : remainTime.diffDays === 0 &&
+            remainTime.diffHrs === 0 &&
+            remainTime.diffMins > 0 ? (
+            <Text style={styles.min}>{remainTime.diffMins} minutes </Text>
+          ) : remainTime.diffDays === 0 &&
+            remainTime.diffHrs === 0 &&
+            remainTime.diffMins === 0 &&
+            remainTime.diffSeconds > 0 ? (
+            <Text style={styles.seconds}>
+              {Math.round(remainTime.diffSeconds)}
+              seconds
+            </Text>
+          ) : (
+            <Text style={styles.procrastination}> procrastination </Text>
+          )}
         </Text>
       </View>
     </Pressable>
@@ -78,5 +92,19 @@ const styles = StyleSheet.create({
   goalText: {
     color: "#fff",
     padding: 8,
+  },
+  inText: {
+    color: "green",
+  },
+  days: { color: "yellow" },
+  hours: { color: "orange" },
+  procrastination: {
+    color: "red",
+  },
+  min: {
+    color: "cyan",
+  },
+  seconds: {
+    color: "blue",
   },
 });
