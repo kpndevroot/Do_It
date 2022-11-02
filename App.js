@@ -5,6 +5,7 @@ import { StyleSheet, View, TextInput, Button } from "react-native";
 import { FlatList } from "react-native";
 import GoalItem from "./src/components/GoalItem";
 import GoalInput from "./src/components/GoalInput";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function App() {
   useEffect(() => {
@@ -13,11 +14,12 @@ export default function App() {
 
   const [goals, setGoals] = useState([]);
   const [modalIsVisible, setModalIsVisible] = useState(false);
-  function addGoalHandler(enteredGoal) {
+  function addGoalHandler(enteredGoal, enteredDate) {
     setGoals((currentGoals) => [
       ...currentGoals,
       {
         text: enteredGoal,
+        date: enteredDate,
         id: Math.random().toString(),
       },
     ]);
@@ -50,13 +52,16 @@ export default function App() {
           onAddGoal={addGoalHandler}
           onCancel={endAddGoalHandler}
         />
+
         <View style={styles.goalsContainer}>
           <FlatList
             data={goals}
             renderItem={(itemData) => {
+              console.log({ fuckingDate: itemData.item.date });
               return (
                 <GoalItem
                   text={itemData.item.text}
+                  data={itemData}
                   id={itemData.item.id}
                   onDeleteItem={deleteGoalHandler}
                 />

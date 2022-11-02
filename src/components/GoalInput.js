@@ -5,18 +5,39 @@ import {
   StyleSheet,
   Modal,
   Image,
+  Text,
 } from "react-native";
 import { useState } from "react";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 function GoalInput(props) {
   const [enteredGoal, setEnteredGoal] = useState("");
+  const [enteredDate, setEnteredDate] = useState(new Date());
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [dateTime, setDateTime] = useState(new Date());
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    hideDatePicker();
+    setEnteredDate(date);
+    console.log({ date: time });
+  };
   function goalInputHandler(enteredText) {
     setEnteredGoal(enteredText);
   }
 
   function addGoalHandler() {
-    props.onAddGoal(enteredGoal);
+    props.onAddGoal(enteredGoal, enteredDate);
     setEnteredGoal("");
+    // setEnteredDate(new Date());
   }
 
   return (
@@ -31,6 +52,14 @@ function GoalInput(props) {
           placeholder="Goal Name"
           onChangeText={goalInputHandler}
           value={enteredGoal}
+        />
+        <Button title="Show Date Picker" onPress={showDatePicker} />
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="datetime"
+          value={enteredDate}
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
