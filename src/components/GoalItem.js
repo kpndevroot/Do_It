@@ -1,8 +1,9 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
-
+import DoubleClick from "react-native-double-tap";
 function GoalItem(props) {
   console.log({ insideDate: props.data.item.date });
+  const [tap, setTap] = useState(false);
   const [remainTime, setRemainTime] = useState({
     diffMs: 0,
     diffDays: 0,
@@ -40,41 +41,82 @@ function GoalItem(props) {
     );
   };
   return (
-    <Pressable
-      android_ripple={{ color: "#210644" }}
-      onPress={props.onDeleteItem.bind(this, props.id)}
+    // <Pressable
+    //   android_ripple={{ color: "#210644" }}
+    //   onPress={props.onDeleteItem.bind(this, props.id)}
+    //
+    // >
+    <DoubleClick
+      doubleTap={props.onDeleteItem.bind(this, props.id)}
+      singleTap={() => {
+        setTap(true);
+      }}
+      delay={1000}
       style={({ pressed }) => pressed && styles.pressedItem}
     >
-      <View style={styles.goalItem}>
-        <Text style={styles.goalText}>
-          {props.text + " "} <Text style={styles.inText}>in</Text>{" "}
-          {remainTime.diffDays > 0 ? (
-            <Text style={styles.days}>
-              {remainTime.diffDays} days {remainTime.diffHrs} hours
-              {remainTime.diffMins} minutes
-            </Text>
-          ) : remainTime.diffDays === 0 && remainTime.diffHrs > 0 ? (
-            <Text style={styles.hours}>
-              {remainTime.diffHrs} hours {remainTime.diffMins} minutes
-            </Text>
-          ) : remainTime.diffDays === 0 &&
-            remainTime.diffHrs === 0 &&
-            remainTime.diffMins > 0 ? (
-            <Text style={styles.min}>{remainTime.diffMins} minutes </Text>
-          ) : remainTime.diffDays === 0 &&
-            remainTime.diffHrs === 0 &&
-            remainTime.diffMins === 0 &&
-            remainTime.diffSeconds > 0 ? (
-            <Text style={styles.seconds}>
-              {Math.round(remainTime.diffSeconds)}
-              seconds
-            </Text>
-          ) : (
-            <Text style={styles.procrastination}> procrastination </Text>
-          )}
-        </Text>
-      </View>
-    </Pressable>
+      {tap == true ? (
+        <View style={styles.goalItemTap}>
+          <Text style={styles.goalTextTap}>
+            {props.text + " "} <Text style={styles.inText}>in</Text>{" "}
+            {remainTime.diffDays > 0 ? (
+              <Text style={styles.days}>
+                {remainTime.diffDays} days {remainTime.diffHrs} hours
+                {remainTime.diffMins} minutes
+              </Text>
+            ) : remainTime.diffDays === 0 && remainTime.diffHrs > 0 ? (
+              <Text style={styles.hours}>
+                {remainTime.diffHrs} hours {remainTime.diffMins} minutes
+              </Text>
+            ) : remainTime.diffDays === 0 &&
+              remainTime.diffHrs === 0 &&
+              remainTime.diffMins > 0 ? (
+              <Text style={styles.min}>{remainTime.diffMins} minutes </Text>
+            ) : remainTime.diffDays === 0 &&
+              remainTime.diffHrs === 0 &&
+              remainTime.diffMins === 0 &&
+              remainTime.diffSeconds > 0 ? (
+              <Text style={styles.seconds}>
+                {Math.round(remainTime.diffSeconds)}
+                seconds
+              </Text>
+            ) : (
+              <Text style={styles.procrastination}> procrastination </Text>
+            )}
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.goalItem}>
+          <Text style={styles.goalText}>
+            {props.text + " "} <Text style={styles.inText}>in</Text>{" "}
+            {remainTime.diffDays > 0 ? (
+              <Text style={styles.days}>
+                {remainTime.diffDays} days {remainTime.diffHrs} hours
+                {remainTime.diffMins} minutes
+              </Text>
+            ) : remainTime.diffDays === 0 && remainTime.diffHrs > 0 ? (
+              <Text style={styles.hours}>
+                {remainTime.diffHrs} hours {remainTime.diffMins} minutes
+              </Text>
+            ) : remainTime.diffDays === 0 &&
+              remainTime.diffHrs === 0 &&
+              remainTime.diffMins > 0 ? (
+              <Text style={styles.min}>{remainTime.diffMins} minutes </Text>
+            ) : remainTime.diffDays === 0 &&
+              remainTime.diffHrs === 0 &&
+              remainTime.diffMins === 0 &&
+              remainTime.diffSeconds > 0 ? (
+              <Text style={styles.seconds}>
+                {Math.round(remainTime.diffSeconds)}
+                seconds
+              </Text>
+            ) : (
+              <Text style={styles.procrastination}> procrastination </Text>
+            )}
+          </Text>
+        </View>
+      )}
+    </DoubleClick>
+    // </Pressable>
   );
 }
 
@@ -86,12 +128,24 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: "#5e0acc",
   },
+  goalItemTap: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#fff",
+  },
   pressedItem: {
     opacity: 0.5,
   },
   goalText: {
     color: "#fff",
     padding: 8,
+  },
+  goalTextTap: {
+    color: "#000",
+    padding: 8,
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid",
   },
   inText: {
     color: "green",
