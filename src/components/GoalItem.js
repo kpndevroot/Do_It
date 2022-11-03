@@ -2,7 +2,6 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import DoubleClick from "react-native-double-tap";
 function GoalItem(props) {
-  console.log({ insideDate: props.data.item.date });
   const [tap, setTap] = useState(false);
   const [remainTime, setRemainTime] = useState({
     diffMs: 0,
@@ -13,7 +12,7 @@ function GoalItem(props) {
   useEffect(() => {
     dateConverter();
     const interval = setInterval(() => {
-      console.log("hi iam loaded");
+      // console.log("hi iam loaded");
       dateConverter();
     }, 5000);
     return () => clearInterval(interval);
@@ -31,14 +30,14 @@ function GoalItem(props) {
       diffHrs: Math.floor((diffMs % 86400000) / 3600000), // hours,
       diffMins: Math.round(((diffMs % 86400000) % 3600000) / 60000), // minutes,
     });
-    console.log(
-      diffDays +
-        " days, " +
-        diffHrs +
-        " hours, " +
-        diffMins +
-        " minutes until Christmas =)"
-    );
+    // console.log(
+    //   diffDays +
+    //     " days, " +
+    //     diffHrs +
+    //     " hours, " +
+    //     diffMins +
+    //     " minutes until Christmas =)"
+    // );
   };
   return (
     // <Pressable
@@ -51,14 +50,16 @@ function GoalItem(props) {
       singleTap={() => {
         setTap(true);
       }}
-      delay={1000}
+      delay={600}
       style={({ pressed }) => pressed && styles.pressedItem}
     >
       {tap == true ? (
         <View style={styles.goalItemTap}>
           <Text style={styles.goalTextTap}>
-            {props.text + " "} <Text style={styles.inText}>in</Text>{" "}
-            {remainTime.diffDays > 0 ? (
+            ✔{props.text + " "}
+            {/* <Text style={styles.inText}>
+              in</Text>{" "} */}
+            {/* {remainTime.diffDays > 0 ? (
               <Text style={styles.days}>
                 {remainTime.diffDays} days {remainTime.diffHrs} hours
                 {remainTime.diffMins} minutes
@@ -81,7 +82,7 @@ function GoalItem(props) {
               </Text>
             ) : (
               <Text style={styles.procrastination}> procrastination </Text>
-            )}
+            )} */}
           </Text>
         </View>
       ) : (
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     margin: 8,
     padding: 8,
     borderRadius: 6,
-    backgroundColor: "#fff",
+    backgroundColor: "#5b5b61",
   },
   pressedItem: {
     opacity: 0.5,
@@ -142,10 +143,11 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   goalTextTap: {
-    color: "#000",
+    color: "#f7f7fb",
     padding: 8,
     textDecorationLine: "line-through",
     textDecorationStyle: "solid",
+    opacity: 0.5,
   },
   inText: {
     color: "green",

@@ -57,7 +57,7 @@ export default function App() {
           <FlatList
             data={goals}
             renderItem={(itemData) => {
-              console.log({ fuckingDate: itemData.item.date });
+              
               return (
                 <GoalItem
                   text={itemData.item.text}

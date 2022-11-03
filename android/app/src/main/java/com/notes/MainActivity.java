@@ -1,4 +1,4 @@
-package com.notes;
+package com.DoIt;
 import android.os.Build;
 import android.os.Bundle;
 

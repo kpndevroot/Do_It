@@ -29,7 +29,6 @@ function GoalInput(props) {
     console.warn("A date has been picked: ", date);
     hideDatePicker();
     setEnteredDate(date);
-    console.log({ date: time });
   };
   function goalInputHandler(enteredText) {
     setEnteredGoal(enteredText);

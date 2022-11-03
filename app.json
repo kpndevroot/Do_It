@@ -1,11 +1,9 @@
 {
   "expo": {
-    "name": "notes",
-    "slug": "notes",
+    "name": "DoIt",
+    "slug": "DoIt",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   },
-  "name": "notes"
+  "name": "DoIt"
 }
